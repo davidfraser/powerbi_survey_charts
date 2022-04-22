@@ -17,18 +17,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-category_names = ['Strongly disagree', 'Disagree',
-                  'Neither agree nor disagree', 'Agree', 'Strongly agree']
-results = {
-    'Question 1': [10, 15, 17, 32, 26],
-    'Question 2': [26, 22, 29, 10, 13],
-    'Question 3': [35, 37, 7, 2, 19],
-    'Question 4': [32, 11, 9, 15, 33],
-    'Question 5': [21, 29, 5, 5, 40],
-    'Question 6': [8, 19, 5, 30, 38]
-}
-
-
 def survey(results, category_names):
     """
     Parameters
@@ -66,8 +54,25 @@ def survey(results, category_names):
     return fig, ax
 
 
-survey(results, category_names)
-plt.show()
+def show_example():
+    category_names = ['Strongly disagree', 'Disagree',
+                      'Neither agree nor disagree', 'Agree', 'Strongly agree']
+    results = {
+        'Question 1': [10, 15, 17, 32, 26],
+        'Question 2': [26, 22, 29, 10, 13],
+        'Question 3': [35, 37, 7, 2, 19],
+        'Question 4': [32, 11, 9, 15, 33],
+        'Question 5': [21, 29, 5, 5, 40],
+        'Question 6': [8, 19, 5, 30, 38]
+    }
+
+    survey(results, category_names)
+    plt.show()
+
+
+if __name__ == '__main__':
+    show_example()
+
 
 #############################################################################
 #
