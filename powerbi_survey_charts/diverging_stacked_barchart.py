@@ -1,9 +1,9 @@
 """
-=============================================
-Discrete distribution as horizontal bar chart
-=============================================
+===============================================================
+Discrete distribution as diverging stacked horizontal bar chart
+===============================================================
 
-Stacked bar charts can be used to visualize discrete distributions.
+Diverging Stacked bar charts can be used to visualize Likert survey results.
 
 This example visualizes the result of a survey in which people could rate
 their agreement to questions on a five-element scale.
@@ -11,6 +11,9 @@ their agreement to questions on a five-element scale.
 The horizontal stacking is achieved by calling `~.Axes.barh()` for each
 category and passing the starting point as the cumulative sum of the
 already drawn bars via the parameter ``left``.
+
+The middle is calculated for each item so that the central Neutral value
+is evenly balanced, with negative results on the left and positive on the right.
 """
 
 import numpy as np
