@@ -44,6 +44,12 @@ def survey(results, category_names):
         The category labels.
     """
 
+    # calculate limits
+    lhs_max = max([counts[0] + counts[1] + counts[2] / 2 for counts in results.values()])
+    rhs_max = max([counts[3] + counts[4] + counts[2] / 2 for counts in results.values()])
+    lhs_max = lhs_max + (5 - lhs_max % 5)
+    rhs_max = rhs_max + (5 - rhs_max % 5)
+
     labels = list(results.keys())
     data = np.array(list(results.values()))
     data_cum = data.cumsum(axis=1)
@@ -67,8 +73,8 @@ def survey(results, category_names):
     ax.axvline(0, linestyle='--', color='black', alpha=.25)
 
     # X Axis
-    ax.set_xlim(-90, 90)
-    ax.set_xticks(np.arange(-90, 91, 10))
+    ax.set_xlim(-lhs_max, rhs_max)
+    ax.set_xticks(np.arange(-lhs_max, rhs_max + 1, 10))
     ax.xaxis.set_major_formatter(lambda x, pos: str(abs(int(x))))
 
     # Y Axis
