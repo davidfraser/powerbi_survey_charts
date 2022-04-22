@@ -45,16 +45,16 @@ def survey(results, category_names):
     """
 
     # calculate limits
-    lhs_max = max([counts[0] + counts[1] + counts[2] / 2 for counts in results.values()])
-    rhs_max = max([counts[3] + counts[4] + counts[2] / 2 for counts in results.values()])
-    lhs_max = lhs_max + (5 - lhs_max % 5)
-    rhs_max = rhs_max + (5 - rhs_max % 5)
-
     labels = list(results.keys())
     data = np.array(list(results.values()))
     data_cum = data.cumsum(axis=1)
     middle_index = data.shape[1] // 2
     offsets = data[:, range(middle_index)].sum(axis=1) + data[:, middle_index] / 2
+
+    lhs_max = max([counts[:middle_index] + counts[middle_index] / 2 for counts in results.values()])
+    rhs_max = max([counts[middle_index+1:] + counts[middle_index] / 2 for counts in results.values()])
+    lhs_max = lhs_max + (5 - lhs_max % 5) # round off to the nearest 5
+    rhs_max = rhs_max + (5 - rhs_max % 5) # round off to the nearest 5
 
     # Color Mapping
     category_colors = plt.get_cmap('coolwarm_r')(
