@@ -84,6 +84,11 @@ def survey(results, category_names):
     return fig, ax
 
 
+def show_survey(results, category_names):
+    fig, ax = survey(results, category_names)
+    plt.show()
+
+
 def show_example():
     category_names = ['Strongly disagree', 'Disagree',
                       'Neither agree nor disagree', 'Agree', 'Strongly agree']
@@ -96,8 +101,7 @@ def show_example():
         'Question 6': [8, 19, 5, 30, 38]
     }
 
-    fig, ax = survey(results, category_names)
-    plt.show()
+    show_survey(results, category_names)
 
 
 if __name__ == '__main__':
