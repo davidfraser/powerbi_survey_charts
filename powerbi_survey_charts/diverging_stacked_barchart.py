@@ -62,6 +62,9 @@ def survey(results, category_names, middle_index=None, split_index=None):
         starts = data_cum[:, i] - widths - offsets
         rects = ax.barh(labels, widths, left=starts, height=0.5,
                         label=colname, color=color)
+        r, g, b, _ = color
+        text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
+        ax.bar_label(rects, label_type='center', color=text_color)
 
     # Add Zero Reference Line
     ax.axvline(0, linestyle='--', color='black', alpha=.25)
