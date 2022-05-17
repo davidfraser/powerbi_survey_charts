@@ -20,7 +20,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def survey(results, category_names):
+def survey(results, category_names, middle_index=None, split_index=None):
     """
     Parameters
     ----------
@@ -37,11 +37,16 @@ def survey(results, category_names):
     labels = list(results.keys())
     data = np.array(list(results.values()))
     data_cum = data.cumsum(axis=1)
-    middle_index = data.shape[1] // 2
-    offsets = data[:, range(middle_index)].sum(axis=1) + data[:, middle_index] / 2
+    if split_index is not None:
+        offsets = data[:, range(split_index)].sum(axis=1)
+        lhs_max = max([sum(counts[:split_index]) for counts in results.values()])
+        rhs_max = max([sum(counts[split_index:]) for counts in results.values()])
+    else:
+        middle_index = (data.shape[1] // 2) if middle_index is None else middle_index
+        offsets = data[:, range(middle_index)].sum(axis=1) + data[:, middle_index] / 2
 
-    lhs_max = max([sum(counts[:middle_index]) + counts[middle_index] / 2 for counts in results.values()])
-    rhs_max = max([sum(counts[middle_index+1:]) + counts[middle_index] / 2 for counts in results.values()])
+        lhs_max = max([sum(counts[:middle_index]) + counts[middle_index] / 2 for counts in results.values()])
+        rhs_max = max([sum(counts[middle_index+1:]) + counts[middle_index] / 2 for counts in results.values()])
     lhs_max = lhs_max + (5 - lhs_max % 5) # round off to the nearest 5
     rhs_max = rhs_max + (5 - rhs_max % 5) # round off to the nearest 5
 
@@ -84,8 +89,8 @@ def survey(results, category_names):
     return fig, ax
 
 
-def show_survey(results, category_names):
-    fig, ax = survey(results, category_names)
+def show_survey(results, category_names, middle_index=None, split_index=None):
+    fig, ax = survey(results, category_names, middle_index=middle_index, split_index=split_index)
     plt.show()
 
 
