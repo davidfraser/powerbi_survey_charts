@@ -41,9 +41,11 @@ def survey(results, category_names, middle_index=None, split_index=None):
         offsets = data[:, range(split_index)].sum(axis=1)
         lhs_max = max([sum(counts[:split_index]) for counts in results.values()])
         rhs_max = max([sum(counts[split_index:]) for counts in results.values()])
+        fraction_right = data[:,split_index:].sum(axis=1) / data.sum(axis=1) 
     else:
         middle_index = (data.shape[1] // 2) if middle_index is None else middle_index
         offsets = data[:, range(middle_index)].sum(axis=1) + data[:, middle_index] / 2
+        fraction_right = (data[:, middle_index] / 2 + data[:,middle_index+1:].sum(axis=1)) / data.sum(axis=1)
 
         lhs_max = max([sum(counts[:middle_index]) + counts[middle_index] / 2 for counts in results.values()])
         rhs_max = max([sum(counts[middle_index+1:]) + counts[middle_index] / 2 for counts in results.values()])
@@ -65,6 +67,8 @@ def survey(results, category_names, middle_index=None, split_index=None):
         r, g, b, _ = color
         text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
         ax.bar_label(rects, label_type='center', color=text_color)
+    for i in range(data.shape[0]):
+        ax.text(0, i+0.3, " %d%%" % (fraction_right[i]*100), color='darkgrey', fontstyle='italic', va='top')
 
     # Add Zero Reference Line
     ax.axvline(0, linestyle='--', color='black', alpha=.25)
