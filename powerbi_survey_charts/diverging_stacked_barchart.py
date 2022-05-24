@@ -82,8 +82,8 @@ def survey(results, category_names, middle_index=None, split_index=None):
     ax.spines['top'].set_visible(False)
     ax.spines['left'].set_visible(False)
 
-    # Ledgend
-    ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
+    # Legend
+    ax.legend(ncol=len(category_names), bbox_to_anchor=(-0.1, 1),
               loc='lower left', fontsize='small')
 
     # Set Background Color
